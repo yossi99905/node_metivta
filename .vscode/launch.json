@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        
+        {
+            "type": "chrome",
+            "name": "launch.json",
+            "request": "launch",
+            "url": "launch.json"
+        }
+    ]
+}

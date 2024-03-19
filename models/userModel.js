@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     ID: String,
     image: String,
     role: {
-        type: String, default: "user"
+        type: [String], default: ["1000"]
     }
 
 
@@ -22,7 +22,7 @@ exports.UserModel = mongoose.model("users", userSchema);
 
 //crate tokon
 exports.crateToken = (userId,role) => {
-    const token = jwt.sign({_id:userId,role:role},process.env.TOKEN_WORD,{expiresIn:"60mins"})
+    const token = jwt.sign({_id:userId,role},process.env.TOKEN_WORD,{expiresIn:"60mins"})
     return token;
 }
 
@@ -39,7 +39,7 @@ exports.valideUser = (body, route) => {
         name: Joi.string().min(3).max(30).required(),
         email: Joi.string().email().required(),
         password: Joi.string().min(2).max(16).required(),
-        dateOfBirth: Joi.date().required(),
+        dateOfBirth: Joi.date(),
         ID: Joi.string().min(9).max(9).required(),
         image: Joi.string().min(3).max(100),
     
