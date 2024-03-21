@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const { UserModel, valideUser, crateToken } = require('../models/userModel')
 
 UserController = {
@@ -51,7 +51,7 @@ UserController = {
             }
             //connected
             const token = crateToken(user._id, user.role);
-            res.json({ token, role: user.role, name: user.name });
+            res.json({ token, role: user.role, name: user.name,score:user.score});
         }
         catch (err) {
             console.log(err);
