@@ -33,6 +33,57 @@ UserController = {
             res.status(502).json({ err })
         }
     },
+    async updateUser(req, res) {
+        const { email } = req.params;
+        const { body } = req;
+        // const validBody = valideUser(body, "update")
+        // if (validBody.error) {
+        //     res.status(401).send(validBody.error.details);
+        // }
+        try {
+            const user = await UserModel.findOne({ email });
+            if (!user) {
+                return res.json("user not found");
+            }
+            const updatedFields = {
+                name: body.name,
+                email: body.email,
+                classRoom: body.classRoom,
+                ID: body.ID,
+                birthday: body.birthday,
+                score: body.score,
+                role: [body.role],
+
+
+            };
+
+            if (body.password) {
+                const hadhCode = await bcrypt.hash(body.password, 10);
+                updatedFields.password = hadhCode;
+            }
+
+            await UserModel.updateOne({ email: body.email }, updatedFields);
+            res.json({ msg: "user updated" });
+        }
+        catch (err) {
+            console.log(err);
+            res.status(502).json({ err })
+        }
+    },
+    async deleteUser(req, res) {
+        const { email } = req.params;
+        try {
+            const user = await UserModel.deleteOne({ email: email });
+            if (user.deletedCount === 0) {
+                return res.json("user not found");
+            }
+            res.json({ msg: "user deleted" });
+        }
+        catch (err) {
+            console.log(err);
+            res.status(502).json({ err })
+        }
+    },
 
     async loginUser(req, res) {
         const { body } = req;
@@ -51,7 +102,7 @@ UserController = {
             }
             //connected
             const token = crateToken(user._id, user.role);
-            res.json({ token, role: user.role, name: user.name,score:user.score});
+            res.json({ token, role: user.role, name: user.name, score: user.score });
         }
         catch (err) {
             console.log(err);
