@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
     password: String,
     classRoom: Number,
     dateOfBirth:{
-        type:Date, default: "1990-01-01"
+        type:Date, 
+        default: "1990-01-01"
     },
     ID: String,
     score:{

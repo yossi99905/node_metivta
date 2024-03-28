@@ -12,7 +12,7 @@ TeacherController = {
             const data = await UserModel.find({
                 classRoom: classNum,
                 role: { $in: [1000] } // $in: [1000] 1000 is the teacher role
-            }).select('name email classRoom');
+            }).select('name email classRoom score');
             res.json(data);
         }
         catch (err) {

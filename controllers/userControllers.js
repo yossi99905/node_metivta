@@ -5,7 +5,7 @@ const { UserModel, valideUser, crateToken } = require('../models/userModel')
 UserController = {
     async getAllUsers(req, res) {
         try {
-            const data = await UserModel.find({});
+            const data = await UserModel.find({}).sort({ 'role.0': 1 ,classRoom:1,name:1}).select('name email classRoom ID birthday score role');
             res.json(data);
         }
         catch (err) {
@@ -34,14 +34,14 @@ UserController = {
         }
     },
     async updateUser(req, res) {
-        const { email } = req.params;
+        const { id } = req.params;
         const { body } = req;
         // const validBody = valideUser(body, "update")
         // if (validBody.error) {
         //     res.status(401).send(validBody.error.details);
         // }
         try {
-            const user = await UserModel.findOne({ email });
+            const user = await UserModel.findOne({ _id: id});
             if (!user) {
                 return res.json("user not found");
             }
@@ -62,8 +62,8 @@ UserController = {
                 updatedFields.password = hadhCode;
             }
 
-            await UserModel.updateOne({ email: body.email }, updatedFields);
-            res.json({ msg: "user updated" });
+            userUpdate = await UserModel.updateOne({ _id: id }, updatedFields);
+            res.json({ msg: "user updated",data:user });
         }
         catch (err) {
             console.log(err);
@@ -71,13 +71,13 @@ UserController = {
         }
     },
     async deleteUser(req, res) {
-        const { email } = req.params;
+        const { id } = req.params;
         try {
-            const user = await UserModel.deleteOne({ email: email });
+            const user = await UserModel.deleteOne({ _id: id });
             if (user.deletedCount === 0) {
                 return res.json("user not found");
             }
-            res.json({ msg: "user deleted" });
+            res.json({ msg: "user deleted",user });
         }
         catch (err) {
             console.log(err);
@@ -102,7 +102,7 @@ UserController = {
             }
             //connected
             const token = crateToken(user._id, user.role);
-            res.json({ token, role: user.role, name: user.name, score: user.score });
+            res.json({ token, role: user.role, name: user.name, score: user.score, classRoom: user.classRoom});
         }
         catch (err) {
             console.log(err);
@@ -115,7 +115,7 @@ UserController = {
         try {
             const data = await UserModel.findOne({ _id: userId });
             const token = crateToken(userId, data.role);
-            res.json({ token, role: data.role, name: data.name });
+            res.json({ token, role: data.role, name: data.name,classRoom: data.classRoom});
         }
         catch (err) {
             console.log(err);
