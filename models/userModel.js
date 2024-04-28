@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema({
         type:Number,default:0
     },
     image: String,
+    secretCode: {
+        type: String, default: (Math.floor(Math.random() * 9000) + 1000).toString()
+    },
     role: {
         type: [String], default: ["1000"]
     }
@@ -51,6 +54,7 @@ exports.valideUser = (body, route) => {
         score: Joi.number().min(0).max(1000),
         ID: Joi.string().min(9).max(9).required(),
         image: Joi.string().min(3).max(100),
+        secretCode: Joi.string().min(4).max(4),
         role: Joi.array().items(Joi.string().min(4).max(4))
     
 

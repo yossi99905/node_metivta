@@ -115,28 +115,28 @@ UserController = {
         try {
             const data = await UserModel.findOne({ _id: userId });
             const token = crateToken(userId, data.role);
-            res.json({ token, role: data.role, name: data.name,classRoom: data.classRoom});
+            res.json({ token, role: data.role, name: data.name,classRoom: data.classRoom,score:data.score });
         }
         catch (err) {
             console.log(err);
             res.status(502).json({ err })
         }
-    },
-    async  createUsers(usersData) {
-        const createdUsers = [];
+    // },
+    // async  createUsers(usersData) {
+    //     const createdUsers = [];
     
-        for (const userData of usersData) {
-            try {
-                const user = new UserModel(userData);
-                const hashedPassword = await bcrypt.hash(user.password, 10);
-                user.password = hashedPassword;
-                await user.save();
-                user.password = "*****";
-                createdUsers.push(user);
-            } catch (error) {
-                console.log(`Failed to create user: ${error}`);
-            }
-        }
+    //     for (const userData of usersData) {
+    //         try {
+    //             const user = new UserModel(userData);
+    //             const hashedPassword = await bcrypt.hash(user.password, 10);
+    //             user.password = hashedPassword;
+    //             await user.save();
+    //             user.password = "*****";
+    //             createdUsers.push(user);
+    //         } catch (error) {
+    //             console.log(`Failed to create user: ${error}`);
+    //         }
+    //     }
 
     }
 };

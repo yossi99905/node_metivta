@@ -57,7 +57,7 @@ exports.authAdmin = (req, res, next) => {
         const deCode = jwt.verify(token, process.env.TOKEN_WORD)
 
         req.tokenData = deCode;
-        if (!deCode.role.includes("3000")) {
+        if (!deCode.role.includes("4000")) {
             return res.status(403).json({ err: "Unauthorized" });
         }
 

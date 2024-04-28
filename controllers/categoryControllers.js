@@ -41,12 +41,12 @@ categoryController = {
             if (!category) {
                 return res.json("category not found");
             }
-            const updatedFields = {
-                name: body.name,
-                description: body.description,
-                image: body.image
-            };
-            await categoriesModel.updateOne({ _id: id }, updatedFields);
+            // const updatedFields = {
+            //     name: body.name,
+            //     description: body.description,
+            //     image: body.image
+            // };
+            await categoriesModel.updateOne({ _id: id }, body);
             res.json({ msg: "category updated" });
         }
         catch (err) {
