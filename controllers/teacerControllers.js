@@ -8,9 +8,10 @@ TeacherController = {
 
     getAllUsersInClass: async (req, res) => {
         const classNum = req.query.classNum;
+
         try {
             const data = await UserModel.find({
-                classRoom: classNum,
+                classRoom: classNum || { $ne: null }, // if classNum is not provided, return all users
                 role: { $in: [1000] } // $in: [1000] 1000 is the teacher role
             }).select('name email classRoom score');
             res.json(data);
