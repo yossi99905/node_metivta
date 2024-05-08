@@ -4,7 +4,8 @@ const jwt = require("jsonwebtoken");
 
 
 const userSchema = new mongoose.Schema({
-    name: String,
+    firstName: String,
+    lastName: String,
     email: String,
     password: String,
     classRoom: Number,
@@ -46,7 +47,8 @@ exports.valideUser = (body, route) => {
         return joiLoginSchema.validate(body)
     }
     const joiRegisterSchema = Joi.object({
-        name: Joi.string().min(2).max(30).required(),
+        firstName: Joi.string().min(2).max(16).required(),
+        lastName: Joi.string().min(2).max(16).required(),
         email: Joi.string().email().required(),
         password: Joi.string().min(2).max(16).required(),
         classRoom: Joi.number().max(10).required(),

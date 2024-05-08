@@ -5,7 +5,7 @@ const { UserModel, valideUser, crateToken } = require('../models/userModel')
 UserController = {
     async getAllUsers(req, res) {
         try {
-            const data = await UserModel.find({}).sort({ 'role.0': 1 ,classRoom:1,name:1}).select('name email classRoom ID birthday score role');
+            const data = await UserModel.find({}).sort({ 'role.0': 1 ,classRoom:1,lastName:1}).select('lastName firstName email classRoom ID birthday score role');
             res.json(data);
         }
         catch (err) {
@@ -46,7 +46,8 @@ UserController = {
                 return res.json("user not found");
             }
             const updatedFields = {
-                name: body.name,
+                firstNmame: body.firstNmame,
+                lastName: body.lastName,
                 email: body.email,
                 classRoom: body.classRoom,
                 ID: body.ID,
