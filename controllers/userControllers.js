@@ -103,7 +103,7 @@ UserController = {
             }
             //connected
             const token = crateToken(user._id, user.role);
-            res.json({ token, role: user.role, name: user.name, score: user.score, classRoom: user.classRoom,secretCode:user.secretCode});
+            res.json({ token, role: user.role,  score: user.score, classRoom: user.classRoom,secretCode:user.secretCode,firstName:user.firstName,lastName:user.lastName });
         }
         catch (err) {
             console.log(err);
@@ -116,7 +116,7 @@ UserController = {
         try {
             const data = await UserModel.findOne({ _id: userId });
             const token = crateToken(userId, data.role);
-            res.json({ token, role: data.role, name: data.name,classRoom: data.classRoom,score:data.score });
+            res.json({ token, role: data.role, firstName: data.firstName,lastName:data.lastName,classRoom: data.classRoom,score:data.score,secretCode:data.secretCode });
         }
         catch (err) {
             console.log(err);
