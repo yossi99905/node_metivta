@@ -10,13 +10,14 @@ TeacherController = {
         const classNum = req.query.classNum;
         try {
             let query = {};
-            if (classNum !== "0") {
+            if (classNum !== 0) {
                 query.classRoom = classNum;
             }
             
+            
             const data = await UserModel.find({
                 ...query,// if classNum is not 0 then add classNum to the query
-                role: { $in: [1000] } // 1000 is the role of the student
+                role: { $in: ["1000"] } // 1000 is the role of the student
             }).select('lastName firstName email classRoom score');
             res.json(data);
         }
