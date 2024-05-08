@@ -10,7 +10,7 @@ TeacherController = {
         const classNum = req.query.classNum;
         try {
             let query = {};
-            if (classNum !== 0) {
+            if (classNum !== "0") {
                 query.classRoom = classNum;
             }
             
