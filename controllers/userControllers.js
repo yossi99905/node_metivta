@@ -102,7 +102,7 @@ UserController = {
             }
             //connected
             const token = crateToken(user._id, user.role);
-            res.json({ token, role: user.role, name: user.name, score: user.score, classRoom: user.classRoom});
+            res.json({ token, role: user.role, name: user.name, score: user.score, classRoom: user.classRoom,secretCode:user.secretCode});
         }
         catch (err) {
             console.log(err);
