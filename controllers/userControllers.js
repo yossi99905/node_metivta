@@ -90,7 +90,7 @@ UserController = {
         const { body } = req;
         const validBody = valideUser(body, "login")
         if (validBody.error) {
-            res.status(401).send(validBody.error.details);
+            return res.status(401).send(validBody.error.details);
         }
         try {
             const user = await UserModel.findOne({ email: body.email })
