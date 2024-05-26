@@ -4,6 +4,7 @@ const productR = require('./products');
 const categoriesR = require('./categories');
 const teacersR = require('./teachers');
 const paymentR = require('./payment');
+const transactionR = require('./transaction');
 
 exports.appInit = (app) => {
     app.use("/", indexR);
@@ -12,4 +13,5 @@ exports.appInit = (app) => {
     app.use("/categories", categoriesR);
     app.use("/teachers", teacersR);
     app.use("/payment", paymentR);
+    app.use("/transactions", transactionR);
 }
