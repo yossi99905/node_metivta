@@ -29,6 +29,7 @@ const studentSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 exports.StudentModel = mongoose.model("transactions", studentSchema);
+exports.TransactionModel = mongoose.model("transaction", transactionSchema);
 
 exports.validTransaction = (body) => {
     const joiTransactionSchema = Joi.object({

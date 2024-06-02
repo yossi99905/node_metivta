@@ -1,4 +1,4 @@
-const { StudentModel, validTransaction } = require('../models/transactionModel');
+const { StudentModel, validTransaction, TransactionModel } = require('../models/transactionModel');
 
 exports.TransactionsController = {
     async getAllTransactions(req, res) {
@@ -76,5 +76,31 @@ exports.TransactionsController = {
             console.log(err);
             res.status(502).json({ err });
         }
+    },
+    async getTransactionsByStudentEmail(req, res) {
+        const { studentEmail } = req.params;
+        const { page = 1, limit = 3 } = req.query; // Default to page 1 and limit 3
+
+        try {
+            const student = await StudentModel.findOne({ studentEmail });
+
+            if (!student) {
+                return res.status(404).json({ error: 'Student not found' });
+            }
+
+            // sort transactions by date
+            const sortedTransactions = student.transactions.sort((a, b) => b.transactionDate - a.transactionDate);
+
+            // paginate transactions
+            const startIndex = (page - 1) * limit;
+            const endIndex = startIndex + parseInt(limit, 10);
+            const paginatedTransactions = sortedTransactions.slice(startIndex, endIndex);
+
+            res.json(paginatedTransactions);
+        } catch (err) {
+            console.log(err);
+            res.status(502).json({ err });
+        }
     }
+
 };

@@ -1,4 +1,4 @@
-const {categoriesModel,validCategories} = require('../models/categoriesModel')
+const { categoriesModel, validCategories } = require('../models/categoriesModel')
 
 categoryController = {
     async getAllCategories(req, res) {
@@ -34,7 +34,7 @@ categoryController = {
         const { body } = req;
         const validBody = validCategories(body, "update")
         if (validBody.error) {
-            res.status(401).send(validBody.error.details);
+            return res.status(401).send(validBody.error.details);
         }
         try {
             const category = await categoriesModel.findOne({ _id: id });
